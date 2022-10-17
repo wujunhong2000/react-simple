@@ -117,9 +117,55 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"index.js":[function(require,module,exports) {
-console.log(1);
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+})({"react/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var React = {
+  createElement: createElement
+};
+function createElement(tag, attrs) {
+  for (var _len = arguments.length, childrens = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    childrens[_key - 2] = arguments[_key];
+  }
+  return {
+    tag: tag,
+    attrs: attrs,
+    childrens: childrens
+  };
+}
+var _default = React;
+exports.default = _default;
+},{}],"react-dom/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var ReactDOM = {
+  render: function render(vnode, container) {
+    console.log('vnode', vnode);
+  }
+};
+var _default = ReactDOM;
+exports.default = _default;
+},{}],"index.js":[function(require,module,exports) {
+"use strict";
+
+var _react = _interopRequireDefault(require("./react"));
+var _reactDom = _interopRequireDefault(require("./react-dom"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var ele = _react.default.createElement("div", {
+  className: "active",
+  title: "123"
+}, "hello", _react.default.createElement("span", null, "react"));
+console.log(ele);
+_reactDom.default.render(ele, document.querySelector('#root'));
+},{"./react":"react/index.js","./react-dom":"react-dom/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -144,7 +190,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "7037" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "12608" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
