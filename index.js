@@ -6,5 +6,5 @@ const ele = (
     hello<span>react</span>
   </div>
 );
-console.log(ele);
+console.log('ele', ele);
 ReactDOM.render(ele, document.querySelector('#root'));

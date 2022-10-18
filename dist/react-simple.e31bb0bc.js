@@ -146,11 +146,68 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 var ReactDOM = {
-  render: function render(vnode, container) {
-    console.log('vnode', vnode);
-  }
+  render: render
 };
+function render(vnode, container) {
+  console.log('vnode', vnode);
+  if (_typeof(vnode) === undefined) return;
+  if (typeof vnode === 'string') {
+    var textNode = document.createTextNode(vnode);
+    return container.appendChild(textNode);
+  }
+  var tag = vnode.tag,
+    attrs = vnode.attrs,
+    childrens = vnode.childrens;
+  console.log(123, JSON.stringify(vnode));
+  var dom = document.createElement(tag);
+  // 属性
+  if (attrs) {
+    Object.keys(attrs).forEach(function (key) {
+      var value = attrs[key];
+      setAttribute(dom, key, value);
+    });
+  }
+  // 子节点
+  if (Array.isArray(childrens) && childrens.length > 0) {
+    childrens.forEach(function (child) {
+      return render(child, dom);
+    });
+  }
+  return container.appendChild(dom);
+}
+function setAttribute(dom, key, value) {
+  if (key === 'className') {
+    key = 'class';
+  }
+  if (/on\w+/.test(key)) {
+    key = key.toLowerCase();
+    dom[key] = value || '';
+  } else if (key === 'style') {
+    if (!value || typeof value === 'string') {
+      dom.style.cssText = value || '';
+    } else if (value && _typeof(value) === 'object') {
+      for (var k in value) {
+        if (typeof value[k] === 'number') {
+          dom.style[k] = value[k] + 'px';
+        } else {
+          dom.style[k] = value[k];
+        }
+      }
+    }
+  } else {
+    if (key in dom) {
+      dom[key] = value || '';
+    }
+    if (value) {
+      dom.setAttribute(key, value);
+    } else {
+      dom.removeAttribute(key);
+    }
+    dom.setAttribute(key, value);
+  }
+}
 var _default = ReactDOM;
 exports.default = _default;
 },{}],"index.js":[function(require,module,exports) {
@@ -163,7 +220,7 @@ var ele = _react.default.createElement("div", {
   className: "active",
   title: "123"
 }, "hello", _react.default.createElement("span", null, "react"));
-console.log(ele);
+console.log('ele', ele);
 _reactDom.default.render(ele, document.querySelector('#root'));
 },{"./react":"react/index.js","./react-dom":"react-dom/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
